@@ -116,6 +116,9 @@ module Mongoid::Audit
     #     array: { field_4: {add: ['foo', 'bar'], remove: ['baz']} } }
     def tracked_edits
       @tracked_edits ||= tracked_changes.inject(HashWithIndifferentAccess.new) do |h,(k,v)|
+        p h
+        p k
+        p v
         unless v[:from].blank? && v[:to].blank?
           if v[:from].blank?
             h[:add] ||={}
