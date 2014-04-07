@@ -98,7 +98,7 @@ module Mongoid::Audit
     #
     # @return [ HashWithIndifferentAccess ] a change set in the format:
     #   { field_1: {to: new_val}, field_2: {from: old_val, to: new_val} }
-    def tracked_changes name
+    def tracked_changes
       @tracked_changes ||= (modified.keys | original.keys).inject(HashWithIndifferentAccess.new) do |h,k|
         h[k] = {from: original[k], to: modified[k]}.delete_if{|k,v| v.nil?} if 
         h
