@@ -98,11 +98,11 @@ module Mongoid::Audit
     #
     # @return [ HashWithIndifferentAccess ] a change set in the format:
     #   { field_1: {to: new_val}, field_2: {from: old_val, to: new_val} }
-    def tracked_changes
+    def tracked_changes name
       @tracked_changes ||= (modified.keys | original.keys).inject(HashWithIndifferentAccess.new) do |h,k|
-        h[k] = {from: original[k], to: modified[k]}.delete_if{|k,v| v.nil?}
+        h[k] = {from: original[k], to: modified[k]}.delete_if{|k,v| v.nil?} if 
         h
-      end.delete_if{|k,v| v.blank? || !trackable_parent_class.tracked_field?(k)}
+      end.delete_if{|k,v| v.blank? || !trackable.tracked_field?(k)}
     end
 
     # Outputs summary of edit actions performed: :add, :modify, :remove, or :array.
